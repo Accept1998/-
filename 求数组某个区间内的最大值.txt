@@ -1,0 +1,3 @@
+
+
+int t=max_element(a,a+i)-a;

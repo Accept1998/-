@@ -1,0 +1,85 @@
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+
+using namespace std;
+
+const int maxn = 2000+5;
+const int INF=0x3f3f3f3f;
+int N,T,tempmin,len[maxn],in[maxn];
+struct Edge
+{
+    int to,val,next;
+} edge[maxn*2];
+
+int pos = 0;
+int head[maxn];
+
+void init()
+{
+    memset(head,-1,sizeof(head));
+}
+
+void add_edge(int from,int to,int val)
+{
+    edge[pos].to = to;
+    edge[pos].val = val;
+    edge[pos].next = head[from];
+    head[from] = pos;
+    pos++;
+    edge[pos].to = from;
+    edge[pos].val = val;
+    edge[pos].next = head[to];
+    head[to] = pos;
+    pos++;
+}
+
+int djstra()
+{
+    int u = N,flag=0,tempmin,si;
+    for(int i = head[u]; i != -1; i = edge[i].next)
+    {
+        int to=edge[i].to;
+        int val=edge[i].val;
+        if(val<len[to])
+        len[to]=val;
+    }
+    in[u]=0;
+    while(flag<N-1)
+    {
+        tempmin=INF;
+        for(int i=1; i<=N; i++)
+        {
+            if(in[i]==0&&len[i]<tempmin)
+            {
+                tempmin=len[i];
+                si=i;
+            }
+        }
+        in[si]=1;
+        flag++;
+        for(int i=head[si]; i!=-1; i=edge[i].next)
+        {
+             if(in[edge[i].to]==0&&(tempmin+edge[i].val<len[edge[i].to]))
+                len[edge[i].to]=tempmin+edge[i].val;
+        }
+    }
+    return 0;
+}
+
+int main()
+{
+    int a,b,c;
+    init();
+    memset(len,INF,sizeof(len));
+    memset(in,0,sizeof(in));
+    scanf("%d%d",&T,&N);
+    for(int i=0; i<T; i++)
+    {
+        scanf("%d%d%d",&a,&b,&c);
+        add_edge(a,b,c);
+    }
+    djstra();
+    printf("%d\n",len[1]);
+    return 0;
+}

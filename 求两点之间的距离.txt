@@ -1,0 +1,15 @@
+struct point
+{
+    double x,y;
+    point() {}
+    point(double _a,double _b)
+    {
+        x=_a;
+        y=_b;
+    }
+};
+
+double distan(point p1,point p2)
+{
+    return sqrt((p1.x-p2.x)*(p1.x-p2.x)+(p1.y-p2.y)*(p1.y-p2.y));
+}

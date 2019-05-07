@@ -1,0 +1,14 @@
+
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    double n;
+    cin>>n;
+    cout<<pow(n,1.0/3)<<endl;
+    return 0;
+}

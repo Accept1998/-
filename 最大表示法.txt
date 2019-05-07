@@ -1,0 +1,23 @@
+int GetBig(char *x)
+{
+    int i = 0, j = 1, k;
+    while(i < n && j < n)
+    {
+        while(x[i+k] == x[j+k] && k < n) k++;
+        if (k == n)  //这个意思就是以i开头的和以j开头的字符串相同
+        {
+            int len = abs(i - j);  //len的长度就是循环节
+            return n - len + i;   //取坐标最大的
+        }
+        else
+        {
+            int t = x[i+k] - x[j+k];
+            if(t>0)  j+=k+1;
+            else i+=k+1;
+            if(i==j) j++;
+            k = 0;
+        }
+    }
+    if(j >= n) return i;
+    return j;
+}

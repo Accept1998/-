@@ -1,0 +1,12 @@
+struct HeapNode
+{
+
+
+  int d;
+   bool operator <  (const HeapNode& rhs)const
+      return d>rhs.d;
+
+}
+
+priority_queue<int,vector<int>,less<int> >q;     从大到小
+priority_queue<int,vector<int>,greater<int> >q;  从小到大

@@ -1,0 +1,5 @@
+函数名： ceil
+用 法： double ceil(double x);
+功 能： 返回大于或者等于指定表达式的最小整数
+头文件：math.h
+返回数据类型：double

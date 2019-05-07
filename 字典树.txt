@@ -1,0 +1,49 @@
+1.定义
+struct node{    
+    int cnt;    
+    struct node *next[26];    
+    node(){    
+        cnt=0;    
+        memset(next,0,sizeof(next));    
+    }    
+};   
+
+2.插入
+
+void buildtrie(char *s){    
+    node *p = root;    
+    node *tmp = NULL;    
+    int l = strlen(s);    
+    for(int i = 0; i < l; ++i){    
+        if(p->next[s[i]-'a'] == NULL){    
+            tmp = new node;    
+            p->next[s[i]-'a'] = tmp;    
+        }    
+        p = p->next[s[i]-'a'];    
+        p->cnt++;    
+    }    
+}
+
+3.查找
+
+void findtrie(char *s){    
+    node *p = root;    
+    int l = strlen(s);    
+    for(int i = 0; i < l; ++i){  
+        if(p->next[s[i]-'a'] == NULL){  
+            printf("0\n");    
+            return;    
+        }    
+        p = p->next[s[i]-'a'];    
+    }  
+    printf("%d\n",p->cnt);    
+}  
+
+4.释放内存
+
+void del(node *root){  
+    for(int i = 0; i < 10; ++i)  
+        if(root->next[i])  
+            del(root->next[i]);  
+    delete(root);  
+}    

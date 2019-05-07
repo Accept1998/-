@@ -1,0 +1,10 @@
+struct Edge
+{
+   int from,to,w;
+   bool operator < (const Edge &a) const
+   {
+       return w<a.w;
+   }
+}edge[506000];
+
+sort(edge,edge+n);

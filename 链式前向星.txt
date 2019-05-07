@@ -1,0 +1,35 @@
+   3、链式前向星
+      链式前向星和邻接表类似，也是链式结构和线性结构的结合，每个结点i都有一个链表，链表的所有数据是从i出发的所有边的集合（对比邻接表存的是顶点集合），边的表示为一个四元组(u, v, w, next)，其中(u, v)代表该条边的有向顶点对，w代表边上的权值，next指向下一条边。
+      具体的，我们需要一个边的结构体数组 edge[MAXM]，MAXM表示边的总数，所有边都存储在这个结构体数组中，并且用head[i]来指向 i 结点的第一条边。
+       边的结构体声明如下：
+    struct EDGE {
+                    int u, v, w, next;
+        EDGE() {}
+        EDGE(int _u, int _v, int _w, int _next) {
+            u = _u, v = _v, w = _w, next = _next;
+        }
+    }edge[MAXM];
+       初始化所有的head[i] = INF，当前边总数 edgeCount = 0
+       每读入一条边，调用addEdge(u, v, w)，具体函数的实现如下：
+    void addEdge(int u, int v, int w) {
+        edge[ edgeCount ] = EDGE(u, v, w, head[u]);
+        head[u] = edgeCount ++;
+    }
+       这个函数的含义是每加入一条边(u, v)，就在原有的链表结构的首部插入这条边，使得每次插入的时间复杂度为O(1)，所以链表的边的顺序和读入顺序正好是逆序的。这种结构在无论是稠密的还是稀疏的图上都有非常好的表现，空间上没有浪费，时间上也是最小开销。
+       调用的时候只要通过head[i]就能访问到由 i 出发的第一条边的编号，通过编号到edge数组进行索引可以得到边的具体信息，然后根据这条边的next域可以得到第二条边的编号，以此类推，直到next域为INF（这里的INF即head数组初始化的那个值，一般取-1即可）。
+
+struct Edge
+{
+    int v,w,next;
+    Edge(){};
+    Edge(int v1,int w1,int next1)
+    {
+        v=v1,w=w1,next=next1;
+    }
+}e[maxn*2];
+
+void add_edge(int u, int v, int w)
+{
+    e[k]=Edge(v,w,head[u]);
+    head[u]=k++;
+}

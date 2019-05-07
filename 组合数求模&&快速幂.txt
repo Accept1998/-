@@ -1,0 +1,82 @@
+#include <iostream>
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
+
+using namespace std;
+
+const long long mod=998244353;
+const int maxn =100000+5;
+
+long long Jc[maxn];
+
+void calJc()    //求maxn以内的数的阶乘
+{
+    Jc[0] = Jc[1] = 1;
+    for(long long i = 2; i < maxn; i++)
+        Jc[i] = Jc[i - 1] * i % mod;
+}
+
+//拓展欧几里得算法求逆元
+void exgcd(long long a, long long b, long long &x, long long &y)    //拓展欧几里得算法
+{
+    if(!b) x = 1, y = 0;
+    else
+    {
+        exgcd(b, a % b, y, x);
+        y -= x * (a / b);
+    }
+}
+
+long long  niYuan(long long a, long long b)   //求a对b取模的逆元
+{
+    long long x, y;
+    exgcd(a, b, x, y);
+    return (x + b) % b;
+}
+
+long long C(long long a, long long b)    //计算C(a, b)
+{
+    return Jc[a] * niYuan(Jc[b], mod) % mod
+        * niYuan(Jc[a - b], mod) % mod;
+}
+
+long long pow_mod(long long a, long long n,long long m)  //计算a的n次方对m取模
+{
+    if(n==0)
+        return 1;
+    long long x = pow_mod(a,n/2,m);
+    long long ans =(long long)x*x%m;
+    if(n%2==1)
+        ans = ans*a%m;
+    return (long long)ans;
+}
+
+int main()
+{
+    long long a,b,n,m,T,xishu,xishu1,num_a,num_b,ans,N_a,N_b;
+    calJc();
+    cin>>T;
+    while(T--)
+    {
+        cin>>a>>b>>n>>m;
+        if(m>n)
+        {
+            printf("0\n");
+            continue;
+        }
+
+        xishu=C(n-1,m-1);  //求系数
+
+        num_a=n-m;     //a的次数
+        num_b=m-1;     //b的次数
+
+        N_a=pow_mod(a,num_a,mod);  //求a的num_a次方
+        N_b=pow_mod(b,num_b,mod);  //求b的num_b次方
+
+        xishu1=(N_a%mod*N_b%mod)%mod;  
+        ans=(xishu%mod*xishu1%mod)%mod;
+        printf("%lld\n",ans);
+    }
+    return 0;
+}

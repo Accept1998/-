@@ -1,0 +1,17 @@
+memset(dp,-1,sizeof(dp));
+
+
+
+int dpBag(int S) {
+    int& ans = dp[S];
+    if(ans >= 0) {
+        return ans;
+    }
+    ans = 0;
+    for(int i = 1; i <= n; i++) {
+        if(S >= volumn[i]) {
+            ans = max(ans, dpBag(S - volumn[i]) + weight[i]);
+        }
+    }
+    return ans;
+}

@@ -1,0 +1,31 @@
+最小表示法：
+int GetMin(char *str)
+{
+    int i,j,k;
+    i=0,j=1,k=0;
+    while(i<n && j<n && k<n)
+    {
+        int t=str[i+k] - str[j+k];
+        if(t==0)
+            k++;
+        else
+        {
+            if(t>0)
+            {
+                j=j+k+1;
+                if(i==j)
+                    j++;
+            }
+            else
+            {
+
+                i=i+k+1;
+                if(i==j)
+                    i++;
+            }
+            k=0;
+        }
+    }
+    i=min(i,j);
+    return i;
+}

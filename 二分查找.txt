@@ -1,0 +1,6 @@
+int getNext(long long i){  
+    int pos = lower_bound(t,t+cnt,i)-t;  
+    return pos;  
+}  
+
+在t数组中找一个刚好大于等于i的数的下标

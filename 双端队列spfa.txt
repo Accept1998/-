@@ -1,0 +1,85 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<algorithm>
+#include<deque>
+using namespace std;
+const int maxn=200000+5;//**数组一定要尽量开大，这里如果开成50000+5会wa掉好几组。**
+int first[maxn<<1],nxt[maxn<<1],tot;
+int dist[maxn];
+bool used[maxn];
+int n,m,p,s,ans;
+struct edge
+{
+    int f,t,v;
+}l[maxn<<1];
+void build(int f,int t,int v)
+{
+    l[++tot]=(edge){f,t,v};
+    nxt[tot]=first[f];
+    first[f]=tot;
+    return;
+}
+void init()
+{
+    tot=0;
+    memset(first,0xfff,sizeof(first));
+}
+void spfa(int s)
+{
+    deque<int>q;
+    q.push_front(s);
+    used[s]=1;
+    dist[s]=0;
+    while(!q.empty())
+    {
+        int f=q.front();
+        q.pop_front();
+        used[f]=0;
+        for(int i=first[f];i!=-1;i=nxt[i])
+        {
+            int v=l[i].t;
+            if(dist[v]>dist[f]+l[i].v)
+            {
+                dist[v]=dist[f]+l[i].v;
+                if(!used[v])
+                {
+                    used[v]=1;
+                    if(q.empty()) q.push_back(v);
+                    else if(dist[v]>dist[q.front()]) q.push_back(v);
+                    else q.push_front(v);
+                }
+            }
+        }
+    }
+}
+int main()
+{
+    int a,b,c;
+    memset(dist,0x3f3f3f3f,sizeof(dist));
+    init();
+    scanf("%d%d%d%d",&n,&m,&p,&s);
+    for(int i=1;i<=m;i++)
+    {
+        scanf("%d%d%d",&a,&b,&c);
+        build(a,b,c);
+        build(b,a,c);
+    }
+    for(int i=1;i<=p;i++)
+    {
+        scanf("%d%d%d",&a,&b,&c);
+        build(a,b,c);
+    }
+    spfa(s);
+    for(int i=1;i<=n;i++)
+    {
+        if(dist[i]<0x3f3f3f3f)
+        {
+            cout<<dist[i]<<'\n';
+            ans++;
+        } 
+        else cout<<"Need Teleport To Repair"<<'\n';
+    }
+    cout<<n-ans<<'\n';
+    return 0;
+}

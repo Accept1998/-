@@ -1,0 +1,23 @@
+
+#include<iostream>  
+#include<cstdio>  
+#include<cmath>  
+using namespace std;  
+  
+int n,m;  
+  
+int gcd(int x,int y){  
+    if(y==0) return x;  
+    else return(gcd(y,x%y));  
+}  
+  
+int lcm(int x,int y){  
+    return x*y/gcd(x,y);  
+}  
+  
+int main(){  
+    while(scanf("%d%d",&n,&m),n!=0||m!=0){  
+        cout<<gcd(n,m)<<"    "<<lcm(n,m)<<endl;  
+    }  
+    return 0;  
+}  

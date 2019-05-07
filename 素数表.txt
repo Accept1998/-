@@ -1,0 +1,18 @@
+#define MAXN 1300000 
+bool is_p[MAXN];
+ 
+void calc()
+{ 
+     for( int i = 1; i < MAXN; i ++)
+        is_p[i] = true;
+
+    is_p[1] = false; 
+
+ for( int i = 2; i < MAXN; i ++)
+    { 
+        if(!is_p[i])
+             continue; 
+       for( int j = 2; i * j < MAXN; j ++)
+            is_p[i * j] = false;
+    }
+}
